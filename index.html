@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATHMENTOR-AI – Giáo sư Toán học AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- KaTeX for fast, reliable math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="window.katexReady=true;if(window.katexQueue){window.katexQueue.forEach(el=>renderMathInElement(el,window.katexOpts));window.katexQueue=[];}"></script>
+  <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <div class="logo-icon">∑</div>
+      <div class="logo-text">
+        <span class="logo-title">MATHMENTOR-AI</span>
+        <span class="logo-sub">Giáo sư Toán học AI</span>
+      </div>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  </div>
+
+  <button class="new-chat-btn" id="newChatBtn"><span>✦</span> Hội thoại mới</button>
+
+  <div class="mode-panel">
+    <p class="mode-label">⚙️ Chế độ AI</p>
+    <div class="mode-btns">
+      <button class="mode-btn active" data-mode="normal">🎓 Giải đầy đủ</button>
+      <button class="mode-btn" data-mode="tutor">📝 Gia sư</button>
+    </div>
+    <p class="mode-desc" id="modeDesc">AI giải thích và đưa đáp án đầy đủ.</p>
+  </div>
+
+  <div class="quiz-panel">
+    <p class="mode-label">🎯 Tạo đề kiểm tra</p>
+    <select class="quiz-select" id="quizTopic">
+      <option value="">-- Chọn chủ đề --</option>
+      <option value="Đại số và phương trình">📘 Đại số & Phương trình</option>
+      <option value="Hàm số và đồ thị">📈 Hàm số & Đồ thị</option>
+      <option value="Đạo hàm và tích phân">∫ Đạo hàm & Tích phân</option>
+      <option value="Hình học phẳng">📐 Hình học phẳng</option>
+      <option value="Hình học không gian">🔷 Hình học không gian</option>
+      <option value="Xác suất và thống kê">🎲 Xác suất & Thống kê</option>
+      <option value="Lượng giác">📏 Lượng giác</option>
+      <option value="Số phức">ℂ Số phức</option>
+      <option value="Tổ hợp và hoán vị">🔢 Tổ hợp & Hoán vị</option>
+      <option value="Dãy số và cấp số">📊 Dãy số & Cấp số</option>
+    </select>
+    <div class="quiz-options">
+      <select class="quiz-select-sm" id="quizLevel">
+        <option value="cơ bản">Cơ bản</option>
+        <option value="trung bình" selected>Trung bình</option>
+        <option value="nâng cao">Nâng cao</option>
+      </select>
+      <select class="quiz-select-sm" id="quizCount">
+        <option value="3">3 câu</option>
+        <option value="5" selected>5 câu</option>
+        <option value="10">10 câu</option>
+      </select>
+    </div>
+    <button class="quiz-btn" id="generateQuizBtn">🎯 Tạo đề ngay</button>
+  </div>
+
+  <div class="history-section">
+    <div class="history-label-row">
+      <p class="history-label">Lịch sử</p>
+      <button class="delete-all-btn" id="deleteAllBtn">🗑️ Xóa tất cả</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <div class="history-empty">Chưa có lịch sử.</div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="footer-badge">✨ Powered by Groq AI ⚡</div>
+  </div>
+</aside>
+
+<main class="main-panel">
+  <header class="topbar">
+    <button class="topbar-toggle" id="topbarToggle">☰</button>
+    <div class="topbar-title"><div class="topbar-icon">∑</div> MATHMENTOR-AI</div>
+    <div class="topbar-right">
+      <span class="mode-indicator" id="modeIndicator">🎓 Giải đầy đủ</span>
+      <span class="badge-topic">📐 Toán học toàn diện</span>
+    </div>
+  </header>
+
+  <section class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <div class="welcome-logo">∑</div>
+      <h1 class="welcome-title">Xin chào! Tôi là <span class="highlight">MATHMENTOR-AI</span></h1>
+      <p class="welcome-sub">Giáo sư Toán học AI toàn diện — hỗ trợ từ cơ bản đến nâng cao.<br/>Vẽ đồ thị tự động • Chế độ gia sư • Tạo đề kiểm tra</p>
+      <div class="feature-chips">
+        <span class="chip">🔷 Vẽ hình tự động</span>
+        <span class="chip">📝 Chế độ gia sư</span>
+        <span class="chip">🎯 Ra đề kiểm tra</span>
+        <span class="chip">📎 Đọc ảnh & tài liệu</span>
+      </div>
+      <div class="quick-prompts">
+        <p class="quick-label">Thử hỏi ngay:</p>
+        <div class="quick-grid">
+          <button class="quick-btn" data-q="Vẽ đồ thị hàm số y = x² - 2x + 1 và tìm đỉnh, trục đối xứng.">📈 Vẽ đồ thị hàm bậc 2</button>
+          <button class="quick-btn" data-q="Giải phương trình bậc 2: 2x² - 5x + 3 = 0">📘 Phương trình bậc 2</button>
+          <button class="quick-btn" data-q="Tính tích phân từ 0 đến 3 của hàm f(x) = x² + 2x">∫ Tính tích phân</button>
+          <button class="quick-btn" data-q="Vẽ tam giác ABC có AB=5, AC=4, góc A = 60 độ và tính diện tích.">🔷 Hình học tam giác</button>
+          <button class="quick-btn" data-q="Giải thích công thức Bayes và cho ví dụ xác suất thực tế.">🎲 Công thức Bayes</button>
+          <button class="quick-btn" data-q="Số phức là gì? Cách tính (3+2i) nhân (1-4i)">ℂ Số phức</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chat-area" id="chatArea" style="display:none;">
+    <div class="messages" id="messages"></div>
+  </section>
+
+  <div class="attachments-bar" id="attachmentsBar" style="display:none;">
+    <div class="attachments-list" id="attachmentsList"></div>
+  </div>
+
+  <div class="input-section">
+    <div class="input-bar">
+      <label class="tool-btn" for="imageInput" title="📷 Đính kèm ảnh bài toán">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <input type="file" id="imageInput" accept="image/*" multiple style="display:none;" />
+      </label>
+      <label class="tool-btn" for="docInput" title="📄 Đính kèm tài liệu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <input type="file" id="docInput" accept=".pdf,.txt,.doc,.docx,.md,.csv" multiple style="display:none;" />
+      </label>
+      <textarea id="userInput" class="chat-input" placeholder="Nhập câu hỏi toán… hoặc đính kèm ảnh/tài liệu (Enter gửi, Shift+Enter xuống dòng)" rows="1"></textarea>
+      <button class="send-btn" id="sendBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <p class="input-hint">MATHMENTOR-AI có thể mắc lỗi. Hãy kiểm tra kết quả với giáo viên.</p>
+  </div>
+</main>
+
+<!-- GEOGEBRA MODAL -->
+<div class="modal-overlay hidden" id="geoModal">
+  <div class="modal-geo">
+    <div class="modal-geo-header">
+      <span>🔷 GeoGebra – Vẽ hình tự động</span>
+      <button class="modal-geo-close" id="geoClose">✕</button>
+    </div>
+    <div id="ggbApplet"></div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal-confirm">
+    <div class="modal-icon">🗑️</div>
+    <h3>Xác nhận xóa</h3>
+    <p id="confirmText"></p>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="confirmCancel">Hủy</button>
+      <button class="modal-delete" id="confirmOk">Xóa</button>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
