@@ -5,7 +5,7 @@
 
 // ───────── CONFIG ─────────
 // ───── GROQ CONFIG (miễn phí, không cần thẻ) ─────
-// API Key được lấy từ config.js (không commit lên GitHub)
+const GROQ_API_KEY = "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";
 const GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODELS  = [
   "llama-3.3-70b-versatile",
